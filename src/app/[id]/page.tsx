@@ -1,5 +1,5 @@
 import React from 'react';
-import '@/components/startPage.css'
+import '@/components/MoviesList.css'
 import {IFilm} from "@/models/types";
 
 interface ParamsProps {
@@ -8,7 +8,7 @@ interface ParamsProps {
     };
 }
 
-const ChoiseFilmByIdPage = async ({params}: ParamsProps) => {
+const MoviesListCard = async ({params}: ParamsProps) => {
     const {id} = params; // Извлекаем id из params
 
     const film: IFilm = await fetch(
@@ -67,4 +67,4 @@ const ChoiseFilmByIdPage = async ({params}: ParamsProps) => {
     );
 };
 
-export default ChoiseFilmByIdPage;
+export default MoviesListCard;
