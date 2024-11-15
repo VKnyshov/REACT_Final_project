@@ -4,10 +4,12 @@ import "./MoviesList.css"
 
 const HeaderComponent = () => {
     return (
-        <div >
-            <ul className="menu">
-                    <li><Link href={'/'}>Movies List</Link></li>
-                    <li><Link href={'/StarsRating'}>Stars Rating</Link></li>
+        <div className="header">
+
+
+            <ul style={{ listStyleType: "none" }}>
+                    <li><Link href={'/'} style={{textDecoration: "none", color: 'white'}}>Movies List</Link></li>
+                    {/*<li><Link href={'/StarsRating'}>Stars Rating</Link></li>*/}
                 </ul>
             </div>
     );

@@ -1,4 +1,4 @@
-.oneFilm {
+.allFilm {
     display: flex;
     justify-content: center;
     align-items: center;
@@ -7,28 +7,28 @@
     /*border: 3px solid yellow;*/
     gap: 10px;
 }
-img {
+
+.poster img {
     width: 150px;
     border-radius: 10px;
     transition: 1s;
 
 }
+
 .poster {
     display: flex;
     justify-content: center;
-    align-items: center;
     flex-direction: column;
     width: 200px;
     height: 270px;
-    border: 2px solid aqua;
+    border: 1px solid aqua;
     border-radius: 10px;
-    /*color: lightyellow;*/
-    padding-left: 10px;
     background-color: #b6bcc2;
     transition: 1s;
 }
+
 .poster h4 {
-width: 170px;
+    width: 170px;
 }
 
 .poster img:hover {
@@ -38,19 +38,28 @@ width: 170px;
     transform: scale(1.1); /*трансформация отсека*/
 }
 
-.menu{
+/*================================================*/
+
+.header {
+    margin-left: 10%;
     display: flex;
-    list-style-type: none;
-    text-decoration: none;
-    /*justify-content: center;*/
-    /*align-items: center;*/
+    justify-content: center;
+    align-items: center;
+    width: 30%;
+    height: 50px;
+    /*background-color: green;*/
 }
 
-.details{
-    margin: 0 20px;
+/*================================================*/
+.details {
+    margin-left: 10%;
     display: flex;
     gap: 20px;
+    color: white;
+    width: 80%;
+
 }
+
 /*///======================================*/
 .pagination {
     display: flex;
@@ -62,7 +71,7 @@ width: 170px;
 .pagination button {
     padding: 8px 16px;
     cursor: pointer;
-    background-color: aqua;
+    background-color: #b21723;
     border-radius: 30px;
     color: black;
 }
@@ -72,3 +81,4 @@ width: 170px;
     font-weight: bold;
 }
 
+/*===========================================================*/

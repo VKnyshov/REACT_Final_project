@@ -29,22 +29,23 @@ const MoviesListCard = async ({params}: ParamsProps) => {
     return (
         <div>
             <div className={'details'}>
-            <div>
-                {film.poster_path && (
-                    <img
-                        src={`https://image.tmdb.org/t/p/w500${film.poster_path}`}
-                        alt={film.title}
-                        style={{width: '200px', borderRadius: '10px'}}
-                    />
-                )}
-            </div>
+                <div>
+                    {film.poster_path && (
+                        <img
+                            src={`https://image.tmdb.org/t/p/w500${film.poster_path}`}
+                            alt={film.title}
+                            style={{width: '250px', borderRadius: '10px'}}
+                        />
+                    )}
+                </div>
                 <div>
                     <h1>{film.title}</h1>
                     <p>Release Date: {film.release_date}</p>
                     <p>Budget: {film.budget}</p>
                     <p>Rating: {film.vote_average}</p>
                     <p>Genres: {film.genres.map(genre => genre.name).join(', ')}</p>
-                    <p> Home page: <a href={film.homepage} target="_blank" rel="noopener noreferrer">{film.homepage}</a></p>
+                    <p> Home page: <a href={film.homepage}>{film.homepage}</a>
+                    </p>
                     <p> Origin country: {film.origin_country}</p>
                     <p> Original language: {film.original_language}</p>
                     <p> Original title: {film.original_title}</p>
@@ -56,13 +57,11 @@ const MoviesListCard = async ({params}: ParamsProps) => {
                     <p> Spoken Languages: {film.spoken_languages.map(spl => spl.name)}</p>
                     <p> Status: {film.status}</p>
                     <p> Tagline: {film.tagline}</p>
-
-
                 </div>
 
             </div>
-            <h2>Description:</h2>
-            <p>{film.overview}</p>
+            <h2 style={{color:'white', padding: '1% 10%'}}>Description:</h2>
+            <p style={{color:'white', padding:'1% 10%'}}>{film.overview}</p>
         </div>
     );
 };

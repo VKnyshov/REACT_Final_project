@@ -48,7 +48,7 @@ const StartPageComponent = () => {
                     ) : (
                         <>
                             {movies.length > 0 ? (
-                                <div className="oneFilm">
+                                <div className="allFilm">
                                     {movies.map((movie: IMovie) => (
                                         <div key={movie.id} className={'poster'}>
                                             <Link href={`/${movie.id}`} style={{ textDecoration: "none" }}>
@@ -61,7 +61,7 @@ const StartPageComponent = () => {
                                                     <p>{movie.title}</p>
                                                 )}
                                             </Link>
-                                            <Link href={`/${movie.id}`} style={{ textDecoration: "none" }}>
+                                            <Link href={`/${movie.id}`} style={{ textDecoration: "none", color:'#300906' }}>
                                                 <h4>{movie.title}</h4>
                                             </Link>
                                         </div>
