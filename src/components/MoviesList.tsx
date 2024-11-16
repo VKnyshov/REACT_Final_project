@@ -1,31 +1,33 @@
 "use client";
 
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import { getMovies, searchMovies } from "@/services/api.service";
 import { IMovie } from "@/models/types";
 import "./MoviesList.css";
 import Link from "next/link";
+import SearchComponent from "@/components/SearchComponent";
 
 const StartPageComponent = () => {
     const [movies, setMovies] = useState<IMovie[]>([]);
     const [currentPage, setCurrentPage] = useState(1);
     const [totalPages, setTotalPages] = useState(1);
     const [loading, setLoading] = useState(false);
-    const [searchQuery, setSearchQuery] = useState('');
     const [isSearching, setIsSearching] = useState(false);
 
-    const loadMovies = async (page: number) => {
+    // Завантажуємо фільми
+    const loadMovies = useCallback(async (page: number) => {
         setLoading(true);
         const data = await getMovies(page);
         setMovies(data.results);
         setTotalPages(data.totalPages);
         setLoading(false);
-    };
+    }, []);
 
-    const handleSearch = async (query: string, page: number = 1) => {
+    // шукаємо фільми
+    const handleSearch = useCallback(async (query: string, page: number = 1) => {
         if (query.length < 3) {
             setIsSearching(false);
-            loadMovies(page);
+            await loadMovies(page);
             return;
         }
 
@@ -35,23 +37,24 @@ const StartPageComponent = () => {
         setMovies(data.results);
         setTotalPages(data.totalPages);
         setLoading(false);
-    };
+    }, [loadMovies]);
 
+    // Юзефект для завантаження і пошуку фільмів
     useEffect(() => {
         if (isSearching) {
-            handleSearch(searchQuery, currentPage);
+            handleSearch('', currentPage);
         } else {
             loadMovies(currentPage);
         }
-    }, [currentPage, isSearching]);
+    }, [currentPage, isSearching, handleSearch, loadMovies]);
 
-    const handleSearchInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-        const value = event.target.value;
-        setSearchQuery(value);
+    // функція обробник змін значень уінпуті, далі передається у SearchComponent
+    const handleSearchInputChange = (query: string) => {
         setCurrentPage(1);
-        handleSearch(value);
+        handleSearch(query); // Выполняем поиск
     };
 
+    // Пагинация
     const handlePreviousPage = () => {
         if (currentPage > 1) {
             setCurrentPage(currentPage - 1);
@@ -67,22 +70,8 @@ const StartPageComponent = () => {
     return (
         <>
             <div>
-                <div style={{ marginBottom: '20px' }}>
-                    <input
-                        type="text"
-                        placeholder="Enter the name of movie..."
-                        value={searchQuery}
-                        onChange={handleSearchInputChange}
-                        style={{
-                            padding: '10px',
-                            margin: '1% 0 0 64%',
-                            width: '100%',
-                            maxWidth: '300px',
-                            borderRadius: '5px',
-                            border: '1px solid #ccc',
-                        }}
-                    />
-                </div>
+                <SearchComponent onSearch={handleSearchInputChange} />
+
                 <div>
                     {loading ? (
                         <p>Loading...</p>
@@ -115,7 +104,6 @@ const StartPageComponent = () => {
                     )}
                 </div>
 
-                {/* Пагинация */}
                 <div className="pagination">
                     <button
                         onClick={handlePreviousPage}

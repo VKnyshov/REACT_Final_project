@@ -91,7 +91,7 @@ export async function searchMovies(query: string, page: number = 1) {
     const apiKey = 'b7a298a0b1d758ea17900529441798b0';
     const accessToken = 'eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiJiN2EyOThhMGIxZDc1OGVhMTc5MDA1Mjk0NDE3OThiMCIsIm5iZiI6MTczMTYxMjY3NS45OTk3NzE4LCJzdWIiOiI2NzM2NDdhODJlMmJiYzRmOGU0YTJhYjUiLCJzY29wZXMiOlsiYXBpX3JlYWQiXSwidmVyc2lvbiI6MX0.cVh4UriTDgMUOM3Uz98eeGv0rT-hfai2_jR3MftE9X4';
 
-    const url = `https://api.themoviedb.org/3/search/movie?api_key=${apiKey}&language=ru-RU&query=${encodeURIComponent(query)}&page=${page}`;
+    const url = `https://api.themoviedb.org/3/search/movie?api_key=${apiKey}&query=${encodeURIComponent(query)}&page=${page}`;
 
     try {
         const response = await fetch(url, {
