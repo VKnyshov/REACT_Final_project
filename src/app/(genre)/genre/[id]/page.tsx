@@ -18,8 +18,7 @@ const GenrePage = () => {
     const [loading, setLoading] = useState(false);
     const [genreName, setGenreName] = useState<string>("");
 
-
-    // завантаження фільмів за жанром
+    // Загрузка фильмов по жанру
     const loadMovies = async (genreId: number, page: number) => {
         setLoading(true);
         const data = await getMoviesByGenre(genreId, page);
@@ -28,45 +27,48 @@ const GenrePage = () => {
         setLoading(false);
     };
 
-    // пошук фільмів
+    // Поиск фильмов
     const handleSearch = async (query: string, page: number = 1) => {
         if (query.length < 3) {
-
-            loadMovies(genreId, page);
+            await loadMovies(genreId, page); // Добавляем await
             return;
         }
 
         setLoading(true);
-
         const data = await searchMovies(query, page);
         setMovies(data.results);
         setTotalPages(data.totalPages);
         setLoading(false);
     };
 
-    // для отримання назви жанру
+    // Получение названия жанра
     const loadGenreName = async (genreId: number) => {
         const genres: IGenre[] = await getGenres();
         const genre = genres.find((g) => g.id === genreId);
         setGenreName(genre ? genre.name : "Неизвестный жанр");
     };
 
-    // Завантаження данних при зміні id
+    // Загружаем данные при изменении id
     useEffect(() => {
-        if (genreId) {
-            loadMovies(genreId, currentPage);
-            loadGenreName(genreId);
-        }
+        (async () => {
+            try {
+                if (genreId) {
+                    await loadMovies(genreId, currentPage);
+                    await loadGenreName(genreId);
+                }
+            } catch (error) {
+                console.error("Ошибка при загрузке данных:", error);
+            }
+        })();
     }, [genreId, currentPage]);
 
-    // обробник для пошукового запросу
+    // Обработчик поискового запроса
     const handleSearchInputChange = (query: string) => {
-
         setCurrentPage(1);
-        handleSearch(query);
+        handleSearch(query).catch((err) => console.error(err)); // Добавляем обработку ошибки
     };
 
-    // пагінація
+    // Пагинация
     const handlePreviousPage = () => {
         if (currentPage > 1) {
             setCurrentPage(currentPage - 1);
