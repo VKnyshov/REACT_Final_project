@@ -17,8 +17,7 @@ const GenrePage = () => {
     const [totalPages, setTotalPages] = useState(1);
     const [loading, setLoading] = useState(false);
     const [genreName, setGenreName] = useState<string>("");
-    const [isSearching, setIsSearching] = useState(false);
-    const [searchQuery, setSearchQuery] = useState('');
+
 
     // завантаження фільмів за жанром
     const loadMovies = async (genreId: number, page: number) => {
@@ -32,13 +31,13 @@ const GenrePage = () => {
     // пошук фільмів
     const handleSearch = async (query: string, page: number = 1) => {
         if (query.length < 3) {
-            setIsSearching(false);
+
             loadMovies(genreId, page);
             return;
         }
 
         setLoading(true);
-        setIsSearching(true);
+
         const data = await searchMovies(query, page);
         setMovies(data.results);
         setTotalPages(data.totalPages);
@@ -62,7 +61,7 @@ const GenrePage = () => {
 
     // обробник для пошукового запросу
     const handleSearchInputChange = (query: string) => {
-        setSearchQuery(query);
+
         setCurrentPage(1);
         handleSearch(query);
     };
@@ -81,7 +80,7 @@ const GenrePage = () => {
     };
 
     return (
-        <div style={{ padding: '20px', color: 'white' }}>
+        <div style={{padding: '20px', color: 'white' }}>
             <h1 style={{ margin: '0 0 2% 5%' }}>Movies by genre: {genreName}</h1>
 
             <SearchComponent onSearch={handleSearchInputChange} />

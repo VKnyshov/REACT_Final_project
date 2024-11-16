@@ -14,7 +14,8 @@ export async function getMovies(page: number = 1) {
         });
 
         if (!response.ok) {
-            throw new Error(`Помилка: ${response.status}`);
+            console.error(`Ошибка при запросе фильмов: ${response.status}`);
+            return { results: [], totalPages: 1 };
         }
 
         const data = await response.json();
@@ -23,8 +24,8 @@ export async function getMovies(page: number = 1) {
             totalPages: data.total_pages || 1
         };
     } catch (err) {
-        console.error('Помилка:', err);
-        return {results: [], totalPages: 1};
+        console.error('Ошибка в getMovies:', err);
+        return { results: [], totalPages: 1 };
     }
 }
 // ===========================================================================================
@@ -45,13 +46,14 @@ export async function getGenres() {
         });
 
         if (!response.ok) {
-            throw new Error(`Помилка: ${response.status}`);
+            console.error(`Ошибка при запросе жанров: ${response.status}`);
+            return [];
         }
 
         const data = await response.json();
         return data.genres || [];
     } catch (err) {
-        console.error('Помилка приотриманні усіх жанрів:', err);
+        console.error('Ошибка в getGenres:', err);
         return [];
     }
 }
@@ -72,7 +74,8 @@ export async function getMoviesByGenre(genreId: number, page: number = 1) {
         });
 
         if (!response.ok) {
-            throw new Error(`Ошибка: ${response.status}`);
+            console.error(`Ошибка при запросе фильмов по жанру: ${response.status}`);
+            return { results: [], totalPages: 1 };
         }
 
         const data = await response.json();
@@ -81,8 +84,8 @@ export async function getMoviesByGenre(genreId: number, page: number = 1) {
             totalPages: data.total_pages || 1
         };
     } catch (err) {
-        console.error('Ошибка:', err);
-        return {results: [], totalPages: 1};
+        console.error('Ошибка в getMoviesByGenre:', err);
+        return { results: [], totalPages: 1 };
     }
 }
 
@@ -103,7 +106,8 @@ export async function searchMovies(query: string, page: number = 1) {
         });
 
         if (!response.ok) {
-            throw new Error(`Помилка: ${response.status}`);
+            console.error(`Ошибка при поиске фильмов: ${response.status}`);
+            return { results: [], totalPages: 1 };
         }
 
         const data = await response.json();
@@ -112,7 +116,7 @@ export async function searchMovies(query: string, page: number = 1) {
             totalPages: data.total_pages || 1,
         };
     } catch (err) {
-        console.error('Помилка при пошуку:', err);
+        console.error('Ошибка в searchMovies:', err);
         return { results: [], totalPages: 1 };
     }
 }
