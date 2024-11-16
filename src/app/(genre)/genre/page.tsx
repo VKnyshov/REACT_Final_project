@@ -3,7 +3,7 @@ import React from 'react';
 const StarsRating = () => {
     return (
         <div>
-            StarsRating
+            genre
         </div>
     );
 };

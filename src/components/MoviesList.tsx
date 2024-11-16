@@ -12,7 +12,6 @@ const StartPageComponent = () => {
     const [totalPages, setTotalPages] = useState(1);
     const [loading, setLoading] = useState(false);
 
-    // Функция для загрузки фильмов
     const loadMovies = async (page: number) => {
         setLoading(true);
         const data = await getMovies(page);
@@ -21,12 +20,11 @@ const StartPageComponent = () => {
         setLoading(false);
     };
 
-    // Загружаем фильмы при изменении страницы
     useEffect(() => {
         loadMovies(currentPage);
     }, [currentPage]);
 
-    // Обработчики кнопок пагинации
+    // пагінація
     const handlePreviousPage = () => {
         if (currentPage > 1) {
             setCurrentPage(currentPage - 1);
@@ -80,7 +78,7 @@ const StartPageComponent = () => {
                         onClick={handlePreviousPage}
                         disabled={currentPage === 1}
                     >Back </button>
-                    <span>Page {currentPage} from {totalPages}</span>
+                    <div>Page {currentPage} from {totalPages}</div>
                     <button
                         onClick={handleNextPage}
                         disabled={currentPage === totalPages}

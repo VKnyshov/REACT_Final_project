@@ -63,3 +63,9 @@ export interface Spoken_languages {
 	iso_639_1: string;
 	name: string;
 }
+
+// ==================================================
+export interface IGenre {
+	id: number;
+	name: string;
+}
