@@ -41,13 +41,18 @@
 /*================================================*/
 
 .details {
-    margin-left: 10%;
+    margin: 2% 0 0 10%;
     display: flex;
-    gap: 20px;
+    gap: 5%;
     color: white;
     width: 80%;
 
 }
+
+.details p {
+    margin: 1% 0 0 0;
+}
+
 
 /*///======================================*/
 .pagination {
@@ -75,9 +80,8 @@
 
 /*===========================================================*/
 .header {
-    /*background-color: #333;*/
     color: white;
-    padding: 10px 0  0 10px;
+    padding: 2% 0 0 10%;
 }
 
 .header ul {
@@ -89,4 +93,16 @@
 .header li {
     color: white;
     cursor: pointer;
+    width: 100px;
+    border: 1px solid white;
+    border-radius: 10px;
+    transition: 0.5s;
 }
+
+    .header li:hover {
+        background-color: gray;
+        border-radius: 30px; /*уровень зоокругления */
+        transition: 0.5s; /*скорость транспормации*/
+        transform: scale(1.5); /*трансформация отсека*/
+    }
+

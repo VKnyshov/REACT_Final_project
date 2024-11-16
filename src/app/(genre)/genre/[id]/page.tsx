@@ -56,7 +56,7 @@ const GenrePage = () => {
 
     return (
         <div style={{ padding: '20px', color: 'white' }}>
-            <h1>Movies by genre: {genreName}</h1>
+            <h1 style={{margin:'0 0 2% 5%'}}>Movies by genre: {genreName}</h1>
             {loading ? (
                 <p>Loading...</p>
             ) : (

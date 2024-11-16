@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState, useEffect } from 'react';
-import { getMovies } from "@/services/api.service";
+import { getMovies, searchMovies } from "@/services/api.service";
 import { IMovie } from "@/models/types";
 import "./MoviesList.css";
 import Link from "next/link";
@@ -11,6 +11,8 @@ const StartPageComponent = () => {
     const [currentPage, setCurrentPage] = useState(1);
     const [totalPages, setTotalPages] = useState(1);
     const [loading, setLoading] = useState(false);
+    const [searchQuery, setSearchQuery] = useState('');
+    const [isSearching, setIsSearching] = useState(false);
 
     const loadMovies = async (page: number) => {
         setLoading(true);
@@ -20,11 +22,36 @@ const StartPageComponent = () => {
         setLoading(false);
     };
 
-    useEffect(() => {
-        loadMovies(currentPage);
-    }, [currentPage]);
+    const handleSearch = async (query: string, page: number = 1) => {
+        if (query.length < 3) {
+            setIsSearching(false);
+            loadMovies(page);
+            return;
+        }
 
-    // пагінація
+        setLoading(true);
+        setIsSearching(true);
+        const data = await searchMovies(query, page);
+        setMovies(data.results);
+        setTotalPages(data.totalPages);
+        setLoading(false);
+    };
+
+    useEffect(() => {
+        if (isSearching) {
+            handleSearch(searchQuery, currentPage);
+        } else {
+            loadMovies(currentPage);
+        }
+    }, [currentPage, isSearching]);
+
+    const handleSearchInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+        const value = event.target.value;
+        setSearchQuery(value);
+        setCurrentPage(1);
+        handleSearch(value);
+    };
+
     const handlePreviousPage = () => {
         if (currentPage > 1) {
             setCurrentPage(currentPage - 1);
@@ -40,6 +67,22 @@ const StartPageComponent = () => {
     return (
         <>
             <div>
+                <div style={{ marginBottom: '20px' }}>
+                    <input
+                        type="text"
+                        placeholder="Enter the name of movie..."
+                        value={searchQuery}
+                        onChange={handleSearchInputChange}
+                        style={{
+                            padding: '10px',
+                            margin: '1% 0 0 64%',
+                            width: '100%',
+                            maxWidth: '300px',
+                            borderRadius: '5px',
+                            border: '1px solid #ccc',
+                        }}
+                    />
+                </div>
                 <div>
                     {loading ? (
                         <p>Loading...</p>
@@ -66,18 +109,18 @@ const StartPageComponent = () => {
                                     ))}
                                 </div>
                             ) : (
-                                <p>undefind</p>
+                                <p style={{color:'white'}}>Movies not found</p>
                             )}
                         </>
                     )}
                 </div>
 
-                {/* Пагінація */}
+                {/* Пагинация */}
                 <div className="pagination">
                     <button
                         onClick={handlePreviousPage}
                         disabled={currentPage === 1}
-                    >Back </button>
+                    >Back</button>
                     <div>Page {currentPage} from {totalPages}</div>
                     <button
                         onClick={handleNextPage}

@@ -24,18 +24,16 @@ const HeaderComponent = () => {
     return (
         <div className="header">
             <ul style={{ listStyleType: "none", padding: 0 }}>
-                <li>
-                    <Link href="/" style={{ textDecoration: "none", color: 'white' }}>Movies List</Link>
-                </li>
+                <Link href="/" style={{ textDecoration: "none", color: 'white', textAlign:'center'}}> <li>
+                  All Movies
+                </li></Link>
                 {loading ? (
                     <li>Loading...</li>
                 ) : (
-                    genres.map((genre) => (
-                        <li key={genre.id}>
-                            <Link href={`/genre/${genre.id}`} style={{ textDecoration: "none", color: 'white' }}
-                            >{genre.name}</Link>
-                        </li>
-
+                    genres.map((genre) => (<div key={genre.id}>
+                        <Link href={`/genre/${genre.id}`} style={{ textDecoration: "none", color: 'white', textAlign:'center' }}>
+                            <li key={genre.id}>{genre.name}</li></Link>
+                        </div>
                     ))
                 )}
             </ul>
