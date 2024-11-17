@@ -4,33 +4,30 @@ import React, { useEffect, useState } from 'react';
 import { useParams } from 'next/navigation';
 import '@/components/MoviesList.css';
 import { IFilm } from "@/models/types";
+import {getMovieById} from "@/services/api.service";
 
 const MoviesListCard = () => {
     const { id } = useParams();
     const [film, setFilm] = useState<IFilm | null>(null);
 
-    useEffect(() => {
-        // щоб игнорувати порміс, що повертається, огорну   визов у void
-        void (async () => {
-            try {
-                const response = await fetch(
-                    `https://api.themoviedb.org/3/movie/${id}?api_key=b7a298a0b1d758ea17900529441798b0`,
-                    {
-                        headers: {
-                            'Content-Type': 'application/json;charset=utf-8',
-                        },
-                        cache: 'no-store',
-                    }
-                );
+    const RatingStars = ({ rating }: { rating: number }) => {
+        const MAX_STARS = 10;
+        const filledStars = Math.round(rating); // заокруглюємо до найближчого
 
-                if (response.ok) {
-                    const data = await response.json();
-                    setFilm(data);
-                } else {
-                    console.error('Помилка приотриманні данних фільма');
-                }
-            } catch (error) {
-                console.error('Помилка завантаження фільму:', error);
+        return (
+            <div className="star-rating">
+                {[...Array(MAX_STARS)].map((_, index) => (
+                    <span key={index} className={`star-rating__star ${index < filledStars ? 'is-selected' : ''}`}> ★</span>
+                ))}
+            </div>
+        );
+    };
+
+    useEffect(() => {
+        void (async () => {
+            if (id) {
+                const movieData = await getMovieById(Number(id));
+                setFilm(movieData);
             }
         })();
     }, [id]);
@@ -38,9 +35,6 @@ const MoviesListCard = () => {
     if (!film) {
         return <div>Loading...</div>;
     }
-
-
-
     return (
         <div>
 
@@ -56,9 +50,15 @@ const MoviesListCard = () => {
                 </div>
                 <div>
                     <h1>{film.title}</h1>
+                    <p style={{paddingBottom: '20px'}}> Tagline: {film.tagline}</p>
+
+                    <div style={{paddingBottom:'20px'}}>
+                        <h4>Rating ({film.vote_average}):</h4>
+                        <RatingStars rating={film.vote_average}/>
+                    </div>
+
                     <p>Release Date: {film.release_date}</p>
                     <p>Budget: {film.budget}</p>
-                    <p>Rating: {film.vote_average}</p>
                     <p>Genres: {film.genres.map(genre => genre.name).join(', ')}</p>
                     <p> Home page: <a href={film.homepage}>{film.homepage}</a></p>
                     <p> Origin country: {film.origin_country}</p>
@@ -71,11 +71,10 @@ const MoviesListCard = () => {
                     <p> Runtime: {film.runtime} minutes</p>
                     <p> Spoken Languages: {film.spoken_languages.map(spl => spl.name).join(', ')}</p>
                     <p> Status: {film.status}</p>
-                    <p> Tagline: {film.tagline}</p>
                 </div>
 
             </div>
-            <h2 style={{color:'white', padding: '1% 10%'}}>Description:</h2>
+            <h2 style={{color: 'white', padding: '1% 10%'}}>Description:</h2>
             <p style={{color:'white', padding:'1% 10%'}}>{film.overview}</p>
         </div>
     );

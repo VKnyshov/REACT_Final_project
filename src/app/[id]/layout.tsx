@@ -2,7 +2,7 @@ import React from "react";
 import {Metadata} from "next";
 
 export const metadata: Metadata = {
-    title: 'Movie Layout',
+    title: 'About movie'
 }
 
 type Props = { children: React.ReactNode }
