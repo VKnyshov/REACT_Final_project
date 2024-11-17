@@ -9,7 +9,7 @@ import {IGenre} from "@/models/types";
 const HeaderComponent = () => {
     const [genres, setGenres] = useState<IGenre[]>([]);
     const [loading, setLoading] = useState(false);
-    console.log(genres)
+    // console.log(genres)
     const loadGenres = async () => {
         setLoading(true);
         const fetchedGenres = await getGenres();
@@ -18,7 +18,7 @@ const HeaderComponent = () => {
     };
 
     useEffect(() => {
-        loadGenres();
+        loadGenres().catch((error) => console.error("Помилка при завантажені жанрів:", error));
     }, []);
 
     return (

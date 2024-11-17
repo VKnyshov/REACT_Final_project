@@ -13,13 +13,12 @@ export interface IMovie {
 	video: boolean;
 	vote_average: number;
 	vote_count: number;
-	vote_count: number;
 }
 
 export interface IFilm {
 	adult: boolean;
 	backdrop_path: string;
-	belongs_to_collection?: any;
+	belongs_to_collection?: string;
 	budget: number;
 	genres: Genres[];
 	homepage: string;

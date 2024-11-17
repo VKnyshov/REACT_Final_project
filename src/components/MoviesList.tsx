@@ -6,6 +6,7 @@ import { IMovie } from "@/models/types";
 import "./MoviesList.css";
 import Link from "next/link";
 import SearchComponent from "@/components/SearchComponent";
+import PaginationComponent from "@/components/PaginationComponent";
 
 const StartPageComponent = () => {
     const [movies, setMovies] = useState<IMovie[]>([]);
@@ -14,7 +15,7 @@ const StartPageComponent = () => {
     const [loading, setLoading] = useState(false);
     const [isSearching, setIsSearching] = useState(false);
 
-    // Завантажуємо фільми
+    // завантаження фільмів
     const loadMovies = useCallback(async (page: number) => {
         setLoading(true);
         const data = await getMovies(page);
@@ -23,7 +24,7 @@ const StartPageComponent = () => {
         setLoading(false);
     }, []);
 
-    // шукаємо фільми
+    // пошук фільмів
     const handleSearch = useCallback(async (query: string, page: number = 1) => {
         if (query.length < 3) {
             setIsSearching(false);
@@ -39,32 +40,42 @@ const StartPageComponent = () => {
         setLoading(false);
     }, [loadMovies]);
 
-    // Юзефект для завантаження і пошуку фільмів
+    // Юзефект для завантаження пошуку фільмів
     useEffect(() => {
-        if (isSearching) {
-            handleSearch('', currentPage);
-        } else {
-            loadMovies(currentPage);
-        }
+        const fetchMovies = async () => {
+            try {
+                if (isSearching) {
+                    await handleSearch('', currentPage);
+                } else {
+                    await loadMovies(currentPage);
+                }
+            } catch (error) {
+                console.error("Помилка при завантаженні фільму:", error);
+            }
+        };
+
+        void fetchMovies();
     }, [currentPage, isSearching, handleSearch, loadMovies]);
 
-    // функція обробник змін значень уінпуті, далі передається у SearchComponent
-    const handleSearchInputChange = (query: string) => {
+
+
+    const handleSearchInputChange = async (query: string) => {
         setCurrentPage(1);
-        handleSearch(query); // Выполняем поиск
+        await handleSearch(query);
     };
 
-    // Пагинация
-    const handlePreviousPage = () => {
-        if (currentPage > 1) {
-            setCurrentPage(currentPage - 1);
-        }
-    };
+    // Компонент рейтинга звезд
+    const RatingStars = ({ rating }: { rating: number }) => {
+        const MAX_STARS = 10;
+        const filledStars = Math.round(rating);
 
-    const handleNextPage = () => {
-        if (currentPage < totalPages) {
-            setCurrentPage(currentPage + 1);
-        }
+        return (
+            <div className="star-rating">
+                {[...Array(MAX_STARS)].map((_, index) => (
+                    <span key={index} className={`star-rating__star ${index < filledStars ? 'is-selected' : ''}`}> ★</span>
+                ))}
+            </div>
+        );
     };
 
     return (
@@ -91,30 +102,31 @@ const StartPageComponent = () => {
                                                     <p>{movie.title}</p>
                                                 )}
                                             </Link>
-                                            <Link href={`/${movie.id}`} style={{ textDecoration: "none", color:'#300906' }}>
+
+                                            <div>
+                                                <RatingStars rating={movie.vote_average} />
+                                            </div>
+
+                                            <Link href={`/${movie.id}`}
+                                                  style={{ textAlign: 'center', textDecoration: "none", color: 'lightyellow' }}>
                                                 <h4>{movie.title}</h4>
                                             </Link>
                                         </div>
                                     ))}
                                 </div>
                             ) : (
-                                <p style={{color:'white'}}>Movies not found</p>
+                                <p style={{ color: 'white' }}>Movies not found</p>
                             )}
                         </>
                     )}
                 </div>
 
-                <div className="pagination">
-                    <button
-                        onClick={handlePreviousPage}
-                        disabled={currentPage === 1}
-                    >Back</button>
-                    <div>Page {currentPage} from {totalPages}</div>
-                    <button
-                        onClick={handleNextPage}
-                        disabled={currentPage === totalPages}
-                    >Next</button>
-                </div>
+                <PaginationComponent
+                    currentPage={currentPage}
+                    totalPages={totalPages}
+                    onPreviousPage={() => setCurrentPage(currentPage - 1)}
+                    onNextPage={() => setCurrentPage(currentPage + 1)}
+                />
             </div>
         </>
     );

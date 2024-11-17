@@ -1,23 +1,23 @@
 "use client";
 
-import React, { useState } from 'react';
+import React, {useState} from 'react';
 
 interface SearchComponentProps {
     onSearch: (query: string) => void;
 }
 
-const SearchComponent: React.FC<SearchComponentProps> = ({ onSearch }) => {
+const SearchComponent: React.FC<SearchComponentProps> = ({onSearch}) => {
     const [searchQuery, setSearchQuery] = useState('');
 
-    // створюємо обробник змінизначеньу інпуті
+
     const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         const value = event.target.value;
         setSearchQuery(value);
-        onSearch(value); // Передаємо запрос у атьківську компоненту
+        onSearch(value);
     };
 
     return (
-        <div style={{ marginBottom: '20px' }}>
+        <div style={{marginBottom: '20px'}}>
             <input
                 type="text"
                 placeholder="Enter the movie title..."
@@ -30,6 +30,8 @@ const SearchComponent: React.FC<SearchComponentProps> = ({ onSearch }) => {
                     maxWidth: '300px',
                     borderRadius: '5px',
                     border: '1px solid #ccc',
+                    background: 'rgb(79, 15, 19,0.9)',
+                    color: 'white',
                 }}
             />
         </div>
