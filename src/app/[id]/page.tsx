@@ -1,36 +1,52 @@
-import React from 'react';
-import '@/components/MoviesList.css'
-import {IFilm} from "@/models/types";
+"use client";
 
-interface ParamsProps {
-    params: {
-        id: string;
-    };
-}
+import React, { useEffect, useState } from 'react';
+import { useParams } from 'next/navigation';
+import '@/components/MoviesList.css';
+import { IFilm } from "@/models/types";
 
-const MoviesListCard = async ({params}: ParamsProps) => {
-    const {id} = params; // Извлекаем id из params
+const MoviesListCard = () => {
+    const { id } = useParams();
+    const [film, setFilm] = useState<IFilm | null>(null);
 
-    const film: IFilm = await fetch(
-        `https://api.themoviedb.org/3/movie/${id}?api_key=b7a298a0b1d758ea17900529441798b0`,
-        {
-            headers: {
-                'Content-Type': 'application/json;charset=utf-8',
-            },
-            cache: 'no-store',
-        }
-    ).then((res) => {
-        if (!res.ok) {
-            throw new Error('Ошибка при получении данных о фильме');
-        }
-        return res.json();
-    });
+    useEffect(() => {
+        // щоб игнорувати порміс, що повертається, огорну   визов у void
+        void (async () => {
+            try {
+                const response = await fetch(
+                    `https://api.themoviedb.org/3/movie/${id}?api_key=b7a298a0b1d758ea17900529441798b0`,
+                    {
+                        headers: {
+                            'Content-Type': 'application/json;charset=utf-8',
+                        },
+                        cache: 'no-store',
+                    }
+                );
+
+                if (response.ok) {
+                    const data = await response.json();
+                    setFilm(data);
+                } else {
+                    console.error('Помилка приотриманні данних фільма');
+                }
+            } catch (error) {
+                console.error('Помилка завантаження фільму:', error);
+            }
+        })();
+    }, [id]);
+
+    if (!film) {
+        return <div>Loading...</div>;
+    }
+
+
 
     return (
         <div>
+
             <div className={'details'}>
-                <div>
-                    {film.poster_path && (
+                                 <div>
+                {film.poster_path && (
                         <img
                             src={`https://image.tmdb.org/t/p/w500${film.poster_path}`}
                             alt={film.title}
@@ -44,8 +60,7 @@ const MoviesListCard = async ({params}: ParamsProps) => {
                     <p>Budget: {film.budget}</p>
                     <p>Rating: {film.vote_average}</p>
                     <p>Genres: {film.genres.map(genre => genre.name).join(', ')}</p>
-                    <p> Home page: <a href={film.homepage}>{film.homepage}</a>
-                    </p>
+                    <p> Home page: <a href={film.homepage}>{film.homepage}</a></p>
                     <p> Origin country: {film.origin_country}</p>
                     <p> Original language: {film.original_language}</p>
                     <p> Original title: {film.original_title}</p>
@@ -54,7 +69,7 @@ const MoviesListCard = async ({params}: ParamsProps) => {
                     <p> Production Countries: {film.production_countries.map(prodCo => prodCo.name).join(', ')}</p>
                     <p> Revenue: {film.revenue}</p>
                     <p> Runtime: {film.runtime} minutes</p>
-                    <p> Spoken Languages: {film.spoken_languages.map(spl => spl.name)}</p>
+                    <p> Spoken Languages: {film.spoken_languages.map(spl => spl.name).join(', ')}</p>
                     <p> Status: {film.status}</p>
                     <p> Tagline: {film.tagline}</p>
                 </div>

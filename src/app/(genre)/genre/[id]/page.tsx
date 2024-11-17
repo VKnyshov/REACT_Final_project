@@ -8,6 +8,7 @@ import Link from "next/link";
 import "@/components/MoviesList.css";
 import SearchComponent from "@/components/SearchComponent";
 
+
 const GenrePage = () => {
     const params = useParams();
     const genreId = Number(params.id);
