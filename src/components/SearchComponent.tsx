@@ -17,7 +17,7 @@ const SearchComponent: React.FC<SearchComponentProps> = ({onSearch}) => {
     };
 
     return (
-        <div style={{marginBottom: '20px'}}>
+        <div style={{marginBottom: '20px', display:'flex'}}>
             <input
                 type="text"
                 placeholder="Enter the movie title..."
@@ -28,8 +28,8 @@ const SearchComponent: React.FC<SearchComponentProps> = ({onSearch}) => {
                     margin: '1% 0 0 64%',
                     width: '100%',
                     maxWidth: '300px',
-                    borderRadius: '5px',
-                    border: '1px solid #ccc',
+                    borderRadius: '30px',
+                    border: '1px solid aqua',
                     background: 'rgb(79, 15, 19,0.9)',
                     color: 'white',
                 }}

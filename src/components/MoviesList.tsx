@@ -82,7 +82,6 @@ const StartPageComponent = () => {
         <>
             <div>
                 <SearchComponent onSearch={handleSearchInputChange} />
-
                 <div>
                     {loading ? (
                         <p>Loading...</p>

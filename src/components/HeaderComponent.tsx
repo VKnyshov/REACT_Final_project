@@ -23,19 +23,26 @@ const HeaderComponent = () => {
 
     return (
         <div className="header">
-            <ul style={{ listStyleType: "none", padding: 0 }}>
-                <Link href="/" style={{ textDecoration: "none", color: 'white', textAlign:'center'}}> <li>
-                  All Movies
-                </li></Link>
+
+
+            <ul style={{listStyleType: "none", padding: 0}}>
+                <Link href="/" style={{textDecoration: "none", color: 'white', textAlign: 'center'}}>
+                    <li>
+                        All Movies
+                    </li>
+                </Link>
                 {loading ? (
                     <li>Loading...</li>
                 ) : (
                     genres.map((genre) => (<div key={genre.id}>
-                        <Link href={`/genre/${genre.id}`} style={{ textDecoration: "none", color: 'white', textAlign:'center' }}>
-                            <li key={genre.id}>{genre.name}</li></Link>
+                            <Link href={`/genre/${genre.id}`}
+                                  style={{textDecoration: "none", color: 'white', textAlign: 'center'}}>
+                                <li key={genre.id}>{genre.name}</li>
+                            </Link>
                         </div>
                     ))
                 )}
+                <p style={{color: 'rgb(0, 255, 255, 0.2)', padding: '20px', fontSize: '10px', height: '15px', fontStyle:'italic'}}> &#174;by VKnyshov  - stydent of the `OKTEN school`</p>
             </ul>
         </div>
     );

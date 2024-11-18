@@ -4,15 +4,13 @@
     align-items: center;
     width: 80%;
     flex-wrap: wrap;
-    /*border: 3px solid yellow;*/
     gap: 10px;
 }
-
+/*===================================*/
 .poster img {
     width: 150px;
     border-radius: 10px;
     transition: 1s;
-
 }
 
 .poster {
@@ -28,7 +26,7 @@
 }
 
 .poster h4 {
-    width: 170px;
+    width: 250px;
 }
 
 .poster img:hover {
@@ -39,28 +37,23 @@
 }
 
 /*================================================*/
-
 .details {
-    margin: 2% 0 0 10%;
+    margin: 5% 0 0 10%;
     display: flex;
     gap: 5%;
     color: white;
     width: 80%;
-
 }
-
 .details p {
     margin: 1% 0 0 0;
 }
-
-
 /*///======================================*/
 .pagination {
     display: flex;
     justify-content: center;
     gap: 10px;
     margin: 20px 0;
-    color: white;
+    color: lightyellow;
 }
 
 .pagination button {
@@ -68,17 +61,16 @@
     cursor: pointer;
     background-color: #b21723;
     border-radius: 30px;
-    color: white;
+    border: 1px solid aqua;
+    color: lightyellow;
     font-weight: bold;
-
 }
 
 .pagination div {
     padding: 8px 16px;
     font-weight: bold;
 }
-
-/*===========================================================*/
+/*==============================*/
 .header {
     color: white;
     padding: 2% 0 0 10%;
@@ -94,18 +86,17 @@
     color: white;
     cursor: pointer;
     width: 100px;
-    border: 1px solid white;
-    border-radius: 10px;
+    border: 1px solid aqua;
+    border-radius: 30px;
     transition: 0.5s;
 }
 
 .header li:hover {
-    background-color: gray;
-    border-radius: 30px; /*уровень зоокругления */
-    transition: 0.5s; /*скорость транспормации*/
-    transform: scale(1.5); /*трансформация отсека*/
+    background-color: #449494;
+    border-radius: 30px;
+    transition: 0.5s;
+    transform: scale(1.5);
 }
-
 /*===========================*/
 .star-rating {
     display: inline-block;
@@ -120,9 +111,7 @@
     color: #ABABAB;
     transition: color 0.2s ease-out;
 }
-
 .star-rating__star.is-selected {
     color: #FFD700;
 }
-
 /*================================*/
