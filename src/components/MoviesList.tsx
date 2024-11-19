@@ -13,9 +13,10 @@ const StartPageComponent = () => {
     const [currentPage, setCurrentPage] = useState(1);
     const [totalPages, setTotalPages] = useState(1);
     const [loading, setLoading] = useState(false);
-    const [isSearching, setIsSearching] = useState(false);
+    const [searchQuery, setSearchQuery] = useState("");
 
-    // завантаження фільмів
+    const NEW_RELEASE_DATE = new Date("2024-09-01");
+
     const loadMovies = useCallback(async (page: number) => {
         setLoading(true);
         const data = await getMovies(page);
@@ -24,47 +25,36 @@ const StartPageComponent = () => {
         setLoading(false);
     }, []);
 
-    // пошук фільмів
     const handleSearch = useCallback(async (query: string, page: number = 1) => {
-        if (query.length < 3) {
-            setIsSearching(false);
+        setLoading(true);
+
+        if (query.trim().length < 3) {
             await loadMovies(page);
-            return;
+        } else {
+            const data = await searchMovies(query, page);
+            setMovies(data.results);
+            setTotalPages(data.totalPages);
         }
 
-        setLoading(true);
-        setIsSearching(true);
-        const data = await searchMovies(query, page);
-        setMovies(data.results);
-        setTotalPages(data.totalPages);
         setLoading(false);
     }, [loadMovies]);
 
-    // Юзефект для завантаження пошуку фільмів
     useEffect(() => {
         const fetchMovies = async () => {
-            try {
-                if (isSearching) {
-                    await handleSearch('', currentPage);
-                } else {
-                    await loadMovies(currentPage);
-                }
-            } catch (error) {
-                console.error("Помилка при завантаженні фільму:", error);
+            if (searchQuery.length >= 3) {
+                await handleSearch(searchQuery, currentPage);
+            } else {
+                await loadMovies(currentPage);
             }
         };
-
         void fetchMovies();
-    }, [currentPage, isSearching, handleSearch, loadMovies]);
+    }, [currentPage, searchQuery, handleSearch, loadMovies]);
 
-
-
-    const handleSearchInputChange = async (query: string) => {
-        setCurrentPage(1);
-        await handleSearch(query);
+    const handleSearchInputChange = (query: string) => {
+        setCurrentPage(1); // Сброс на первую страницу при изменении поиска
+        setSearchQuery(query);
     };
 
-    // Компонент рейтинга звезд
     const RatingStars = ({ rating }: { rating: number }) => {
         const MAX_STARS = 10;
         const filledStars = Math.round(rating);
@@ -93,19 +83,24 @@ const StartPageComponent = () => {
                                         <div key={movie.id} className={'poster'}>
                                             <Link href={`/${movie.id}`} style={{ textDecoration: "none" }}>
                                                 {movie.poster_path ? (
-                                                    <img
-                                                        src={`https://image.tmdb.org/t/p/w500${movie.poster_path}`}
-                                                        alt={movie.title}
-                                                    />
+                                                    <>
+                                                        {new Date(movie.release_date) > NEW_RELEASE_DATE && (
+                                                            <h6>
+                                                                <span className="badge">New</span>
+                                                            </h6>
+                                                        )}
+                                                        <img
+                                                            src={`https://image.tmdb.org/t/p/w500${movie.poster_path}`}
+                                                            alt={movie.title}
+                                                        />
+                                                    </>
                                                 ) : (
                                                     <p>{movie.title}</p>
                                                 )}
                                             </Link>
-
                                             <div>
                                                 <RatingStars rating={movie.vote_average} />
                                             </div>
-
                                             <Link href={`/${movie.id}`}
                                                   style={{ textAlign: 'center', textDecoration: "none", color: 'lightyellow' }}>
                                                 <h4>{movie.title}</h4>
@@ -119,7 +114,6 @@ const StartPageComponent = () => {
                         </>
                     )}
                 </div>
-
                 <PaginationComponent
                     currentPage={currentPage}
                     totalPages={totalPages}

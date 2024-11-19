@@ -19,6 +19,9 @@ const GenrePage = () => {
     const [loading, setLoading] = useState(false);
     const [genreName, setGenreName] = useState<string>("");
 
+    const NEW_RELEASE_DATE = new Date("2024-09-01");
+
+
     const loadMovies = async (genreId: number, page: number) => {
         setLoading(true);
         const data = await getMoviesByGenre(genreId, page);
@@ -105,10 +108,22 @@ const GenrePage = () => {
                             <div key={movie.id} className="poster">
                                 <Link href={`/${movie.id}`} style={{textDecoration: "none"}}>
                                     {movie.poster_path ? (
-                                        <img
-                                            src={`https://image.tmdb.org/t/p/w500${movie.poster_path}`}
-                                            alt={movie.title}
-                                        />
+
+
+                                        <>
+                                            {new Date(movie.release_date) > NEW_RELEASE_DATE && (
+                                                <h6>
+                                                    <span className="badge">New</span>
+                                                </h6>
+                                            )}
+
+
+                                            <img
+                                                src={`https://image.tmdb.org/t/p/w500${movie.poster_path}`}
+                                                alt={movie.title}
+                                            />
+
+                                        </>
                                     ) : (
                                         <p>{movie.title}</p>
                                     )}

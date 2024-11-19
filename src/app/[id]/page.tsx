@@ -1,23 +1,24 @@
 "use client";
 
-import React, { useEffect, useState } from 'react';
-import { useParams } from 'next/navigation';
+import React, {useEffect, useState} from 'react';
+import {useParams} from 'next/navigation';
 import '@/components/MoviesList.css';
-import { IFilm } from "@/models/types";
+import {IFilm} from "@/models/types";
 import {getMovieById} from "@/services/api.service";
 
 const MoviesListCard = () => {
-    const { id } = useParams();
+    const {id} = useParams();
     const [film, setFilm] = useState<IFilm | null>(null);
 
-    const RatingStars = ({ rating }: { rating: number }) => {
+    const RatingStars = ({rating}: { rating: number }) => {
         const MAX_STARS = 10;
         const filledStars = Math.round(rating); // заокруглюємо до найближчого
 
         return (
             <div className="star-rating">
                 {[...Array(MAX_STARS)].map((_, index) => (
-                    <span key={index} className={`star-rating__star ${index < filledStars ? 'is-selected' : ''}`}> ★</span>
+                    <span key={index}
+                          className={`star-rating__star ${index < filledStars ? 'is-selected' : ''}`}> ★</span>
                 ))}
             </div>
         );
@@ -39,8 +40,11 @@ const MoviesListCard = () => {
         <div>
 
             <div className={'details'}>
-                                 <div>
-                {film.poster_path && (
+                <div className="poster-container">
+                    {new Date(film.release_date) > new Date("2024-09-01") && (
+                        <span className="badge">New</span>
+                    )}
+                    {film.poster_path && (
                         <img
                             src={`https://image.tmdb.org/t/p/w500${film.poster_path}`}
                             alt={film.title}
@@ -48,11 +52,12 @@ const MoviesListCard = () => {
                         />
                     )}
                 </div>
+
                 <div>
                     <h1>{film.title}</h1>
                     <p style={{paddingBottom: '20px'}}> Tagline: {film.tagline}</p>
 
-                    <div style={{paddingBottom:'20px'}}>
+                    <div style={{paddingBottom: '20px'}}>
                         <h4>Rating ({film.vote_average}):</h4>
                         <RatingStars rating={film.vote_average}/>
                     </div>
@@ -75,7 +80,7 @@ const MoviesListCard = () => {
 
             </div>
             <h2 style={{color: 'white', padding: '1% 10%'}}>Description:</h2>
-            <p style={{color:'white', padding:'1% 10%'}}>{film.overview}</p>
+            <p style={{color: 'white', padding: '1% 10%'}}>{film.overview}</p>
         </div>
     );
 };
