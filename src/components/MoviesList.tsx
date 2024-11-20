@@ -51,7 +51,7 @@ const StartPageComponent = () => {
     }, [currentPage, searchQuery, handleSearch, loadMovies]);
 
     const handleSearchInputChange = (query: string) => {
-        setCurrentPage(1); // Сброс на первую страницу при изменении поиска
+        setCurrentPage(1); //
         setSearchQuery(query);
     };
 
