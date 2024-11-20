@@ -12,22 +12,20 @@ import PaginationComponent from "@/components/PaginationComponent";
 const GenrePage = () => {
     const params = useParams();
     const genreId = Number(params.id);
-
     const [movies, setMovies] = useState<IMovie[]>([]);
     const [currentPage, setCurrentPage] = useState(1);
     const [totalPages, setTotalPages] = useState(1);
-    const [loading, setLoading] = useState(false);
+    // const [loading, setLoading] = useState(false);
     const [genreName, setGenreName] = useState<string>("");
-
     const NEW_RELEASE_DATE = new Date("2024-09-01");
 
 
     const loadMovies = async (genreId: number, page: number) => {
-        setLoading(true);
+        // setLoading(true);
         const data = await getMoviesByGenre(genreId, page);
         setMovies(data.results);
         setTotalPages(data.totalPages);
-        setLoading(false);
+        // setLoading(false);
     };
 
     const handleSearch = async (query: string, page: number = 1) => {
@@ -36,11 +34,11 @@ const GenrePage = () => {
             return;
         }
 
-        setLoading(true);
+        // setLoading(true);
         const data = await searchMovies(query, page);
         setMovies(data.results);
         setTotalPages(data.totalPages);
-        setLoading(false);
+        // setLoading(false);
     };
 
     const loadGenreName = async (genreId: number) => {
@@ -99,11 +97,12 @@ const GenrePage = () => {
 
             <SearchComponent onSearch={handleSearchInputChange}/>
 
-            {loading ? (
-                <p>Loading...</p>
-            ) : (
+            {
+            //     loading ? (
+            //     <p>Loading...</p>
+            // ) : (
                 <>
-                    <div className="allFilm">
+                    <div className="allMovies">
                         {movies.map((movie) => (
                             <div key={movie.id} className="poster">
                                 <Link href={`/${movie.id}`} style={{textDecoration: "none"}}>
@@ -146,7 +145,8 @@ const GenrePage = () => {
                         onNextPage={handleNextPage}
                     />
                 </>
-            )}
+            // )
+            }
         </div>
     );
 };

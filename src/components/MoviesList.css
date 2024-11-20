@@ -1,4 +1,4 @@
-.allFilm {
+.allMovies {
     display: flex;
     justify-content: center;
     align-items: center;
@@ -18,6 +18,7 @@
     display: flex;
     justify-content: center;
     flex-direction: column;
+
     width: 280px;
     height: 320px;
     border: 1px solid aqua;

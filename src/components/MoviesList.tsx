@@ -12,21 +12,21 @@ const StartPageComponent = () => {
     const [movies, setMovies] = useState<IMovie[]>([]);
     const [currentPage, setCurrentPage] = useState(1);
     const [totalPages, setTotalPages] = useState(1);
-    const [loading, setLoading] = useState(false);
+    // const [loading, setLoading] = useState(false);
     const [searchQuery, setSearchQuery] = useState("");
 
     const NEW_RELEASE_DATE = new Date("2024-09-01");
 
     const loadMovies = useCallback(async (page: number) => {
-        setLoading(true);
+        // setLoading(true);
         const data = await getMovies(page);
         setMovies(data.results);
         setTotalPages(data.totalPages);
-        setLoading(false);
+        // setLoading(false);
     }, []);
 
     const handleSearch = useCallback(async (query: string, page: number = 1) => {
-        setLoading(true);
+        // setLoading(true);
 
         if (query.trim().length < 3) {
             await loadMovies(page);
@@ -36,7 +36,7 @@ const StartPageComponent = () => {
             setTotalPages(data.totalPages);
         }
 
-        setLoading(false);
+        // setLoading(false);
     }, [loadMovies]);
 
     useEffect(() => {
@@ -73,12 +73,13 @@ const StartPageComponent = () => {
             <div>
                 <SearchComponent onSearch={handleSearchInputChange} />
                 <div>
-                    {loading ? (
-                        <p>Loading...</p>
-                    ) : (
+                    {
+                    //     loading ? (
+                    //     <p>Loading...</p>
+                    // ) : (
                         <>
                             {movies.length > 0 ? (
-                                <div className="allFilm">
+                                <div className="allMovies">
                                     {movies.map((movie: IMovie) => (
                                         <div key={movie.id} className={'poster'}>
                                             <Link href={`/${movie.id}`} style={{ textDecoration: "none" }}>
@@ -112,7 +113,8 @@ const StartPageComponent = () => {
                                 <p style={{ color: 'white' }}>Movies not found</p>
                             )}
                         </>
-                    )}
+                    // )
+                    }
                 </div>
                 <PaginationComponent
                     currentPage={currentPage}
@@ -126,3 +128,4 @@ const StartPageComponent = () => {
 };
 
 export default StartPageComponent;
+
