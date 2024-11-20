@@ -15,7 +15,7 @@ const GenrePage = () => {
     const [movies, setMovies] = useState<IMovie[]>([]);
     const [currentPage, setCurrentPage] = useState(1);
     const [totalPages, setTotalPages] = useState(1);
-    // const [loading, setLoading] = useState(false);
+    const [loading, setLoading] = useState(false);
     const [genreName, setGenreName] = useState<string>("");
     const NEW_RELEASE_DATE = new Date("2024-09-01");
 
@@ -34,11 +34,11 @@ const GenrePage = () => {
             return;
         }
 
-        // setLoading(true);
+        setLoading(true);
         const data = await searchMovies(query, page);
         setMovies(data.results);
         setTotalPages(data.totalPages);
-        // setLoading(false);
+        setLoading(false);
     };
 
     const loadGenreName = async (genreId: number) => {
@@ -97,10 +97,9 @@ const GenrePage = () => {
 
             <SearchComponent onSearch={handleSearchInputChange}/>
 
-            {
-            //     loading ? (
-            //     <p>Loading...</p>
-            // ) : (
+            {loading ? (
+                <p>Loading...</p>
+            ) : (
                 <>
                     <div className="allMovies">
                         {movies.map((movie) => (
@@ -145,8 +144,7 @@ const GenrePage = () => {
                         onNextPage={handleNextPage}
                     />
                 </>
-            // )
-            }
+            )}
         </div>
     );
 };

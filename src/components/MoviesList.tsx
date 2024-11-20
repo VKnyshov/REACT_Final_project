@@ -12,7 +12,7 @@ const StartPageComponent = () => {
     const [movies, setMovies] = useState<IMovie[]>([]);
     const [currentPage, setCurrentPage] = useState(1);
     const [totalPages, setTotalPages] = useState(1);
-    // const [loading, setLoading] = useState(false);
+    const [loading, setLoading] = useState(false);
     const [searchQuery, setSearchQuery] = useState("");
 
     const NEW_RELEASE_DATE = new Date("2024-09-01");
@@ -26,7 +26,7 @@ const StartPageComponent = () => {
     }, []);
 
     const handleSearch = useCallback(async (query: string, page: number = 1) => {
-        // setLoading(true);
+        setLoading(true);
 
         if (query.trim().length < 3) {
             await loadMovies(page);
@@ -36,7 +36,7 @@ const StartPageComponent = () => {
             setTotalPages(data.totalPages);
         }
 
-        // setLoading(false);
+        setLoading(false);
     }, [loadMovies]);
 
     useEffect(() => {
@@ -72,11 +72,9 @@ const StartPageComponent = () => {
         <>
             <div>
                 <SearchComponent onSearch={handleSearchInputChange} />
-                <div>
-                    {
-                    //     loading ? (
-                    //     <p>Loading...</p>
-                    // ) : (
+                <div> {loading ? (
+                        <p>Loading...</p>
+                    ) : (
                         <>
                             {movies.length > 0 ? (
                                 <div className="allMovies">
@@ -113,7 +111,7 @@ const StartPageComponent = () => {
                                 <p style={{ color: 'white' }}>Movies not found</p>
                             )}
                         </>
-                    // )
+                    )
                     }
                 </div>
                 <PaginationComponent

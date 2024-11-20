@@ -2,10 +2,9 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    width: 80%;
+    width: 95%;
     flex-wrap: wrap;
     gap: 10px;
-    /*height: 100%;*/
 }
 /*===================================*/
 .poster img {
@@ -43,12 +42,12 @@
 .details {
     margin: 5% 0 0 10%;
     display: flex;
-    gap: 5%;
+    gap: 30px;
     color: white;
-    width: 80%;
+    width: 70%;
 }
 .details p {
-    margin: 1% 0 0 0;
+    margin: 1% 0;
 }
 /*///======================================*/
 .pagination {

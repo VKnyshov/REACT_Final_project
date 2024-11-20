@@ -8,13 +8,12 @@ import {IGenre} from "@/models/types";
 
 const HeaderComponent = () => {
     const [genres, setGenres] = useState<IGenre[]>([]);
-    const [loading, setLoading] = useState(false);
-    // console.log(genres)
+    // const [loading, setLoading] = useState(false);
     const loadGenres = async () => {
-        setLoading(true);
+        // setLoading(true);
         const fetchedGenres = await getGenres();
         setGenres(fetchedGenres);
-        setLoading(false);
+        // setLoading(false);
     };
 
     useEffect(() => {
