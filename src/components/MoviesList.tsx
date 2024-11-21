@@ -18,11 +18,9 @@ const StartPageComponent = () => {
     const NEW_RELEASE_DATE = new Date("2024-09-01");
 
     const loadMovies = useCallback(async (page: number) => {
-        // setLoading(true);
         const data = await getMovies(page);
         setMovies(data.results);
         setTotalPages(data.totalPages);
-        // setLoading(false);
     }, []);
 
     const handleSearch = useCallback(async (query: string, page: number = 1) => {
@@ -126,4 +124,8 @@ const StartPageComponent = () => {
 };
 
 export default StartPageComponent;
+
+
+
+
 

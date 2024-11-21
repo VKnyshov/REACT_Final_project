@@ -8,12 +8,12 @@ import {IGenre} from "@/models/types";
 
 const HeaderComponent = () => {
     const [genres, setGenres] = useState<IGenre[]>([]);
-    // const [loading, setLoading] = useState(false);
+    const [loading, setLoading] = useState(false);
     const loadGenres = async () => {
-        // setLoading(true);
+        setLoading(true);
         const fetchedGenres = await getGenres();
         setGenres(fetchedGenres);
-        // setLoading(false);
+        setLoading(false);
     };
 
     useEffect(() => {
@@ -30,9 +30,9 @@ const HeaderComponent = () => {
                     </li>
                 </Link>
                 {
-                    // loading ? (
-                    // <li>Loading...</li>
-                // ) : (
+                    loading ? (
+                    <li>Loading...</li>
+                ) : (
                     genres.map((genre) => (<div key={genre.id}>
                             <Link href={`/genre/${genre.id}`}
                                   style={{textDecoration: "none", color: 'white', textAlign: 'center'}}>
@@ -40,7 +40,7 @@ const HeaderComponent = () => {
                             </Link>
                         </div>
                     ))
-                // )
+                )
                 }
                 <p style={{
                     color: 'rgb(0, 255, 255, 0.2)',
