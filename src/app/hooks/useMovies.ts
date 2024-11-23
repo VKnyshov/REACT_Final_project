@@ -39,7 +39,7 @@ const useMovies = (initialMovies: IMovie[] = []) => {
         async (page: number, genreId?: number) => {
             setLoading(true);
 
-            if (searchQuery.trim().length >= 3) {
+            if (searchQuery.trim().length >= 1) {
                 const data = await searchMovies(searchQuery, page);
                 setMovies(data.results);
                 setTotalPages(data.totalPages);
