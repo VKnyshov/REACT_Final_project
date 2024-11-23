@@ -23,7 +23,7 @@ const useMovies = (initialMovies: IMovie[] = []) => {
         // setLoading(true);
         setSearchQuery(query);
 
-        if (query.trim().length >= 3) {
+        if (query.trim().length >= 1) {
             const data = await searchMovies(query, page);
             setMovies(data.results);
             setTotalPages(data.totalPages);
