@@ -12,7 +12,7 @@ const StartPageComponent = () => {
 
     useEffect(() => {
         void loadMovies(currentPage);
-    }, [currentPage]);
+    }, [currentPage, loadMovies]);
 
     return (
         <div>

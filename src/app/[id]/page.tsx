@@ -8,6 +8,7 @@ import { getMovieById, searchMovies } from "@/services/api.service";
 import SearchComponent from "@/components/SearchComponent";
 import PaginationComponent from "@/components/PaginationComponent";
 import Link from "next/link";
+import Image from "next/image";
 
 const MoviesListCard = () => {
     const { id } = useParams();
@@ -91,11 +92,15 @@ const MoviesListCard = () => {
                                 </h6>
                                 <Link href={`/${movie.id}`} style={{ textDecoration: "none" }}>
                                     {movie.poster_path ? (
-                                        <img
+                                        <Image
                                             src={`https://image.tmdb.org/t/p/w500${movie.poster_path}`}
                                             alt={movie.title}
-                                            style={{ width: "150px", borderRadius: "10px" }}
+                                            width={150} // Указываем ширину
+                                            height={225} // Указываем высоту (примерное соотношение 2:3)
+                                            style={{ borderRadius: "10px" }}
+                                            priority // Добавляем priority для повышения LCP
                                         />
+
                                     ) : (
                                         <p>{movie.title}</p>
                                     )}
@@ -127,10 +132,14 @@ const MoviesListCard = () => {
                                 <span className="badge">New</span>
                             )}
                             {film.poster_path && (
-                                <img
+                                <Image
                                     src={`https://image.tmdb.org/t/p/w500${film.poster_path}`}
                                     alt={film.title}
-                                    style={{ width: "250px", borderRadius: "10px" }}/>
+                                    width={250}
+                                    height={375}
+                                    style={{ borderRadius: "10px" }}
+                                    priority // Если это "above the fold" изображение
+                                />
                             )}
                         </div>
 

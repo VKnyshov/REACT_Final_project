@@ -20,8 +20,12 @@ const useMovies = (initialMovies: IMovie[] = []) => {
 
     const handleSearch = useCallback(async (query: string, page: number = 1, genreId?: number) => {
         // setLoading(true);
+
+        // Сбрасываем текущую страницу на первую
+        setCurrentPage(1);
+
         if (query.trim().length >= 3) {
-            const data = await searchMovies(query, page);
+            const data = await searchMovies(query, 1); // Поиск всегда с первой страницы
             setMovies(data.results);
             setTotalPages(data.totalPages);
         } else {
