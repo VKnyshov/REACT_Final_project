@@ -23,7 +23,7 @@ const MoviesListCard = () => {
 
     const fetchMovies = async (query: string, page: number = 1) => {
         setLoading(true);
-        if (query.trim().length >= 3) {
+        if (query.trim().length >= 1) {
             const data = await searchMovies(query, page);
             setMovies(data.results);
             setTotalPages(data.totalPages);
@@ -47,7 +47,7 @@ const MoviesListCard = () => {
 
     useEffect(() => {
         const fetchFilm = async () => {
-            if (id && searchQuery.length < 3) {
+            if (id && searchQuery.length < 1) {
                 const movieData = await getMovieById(Number(id));
                 setFilm(movieData);
             }
@@ -80,7 +80,7 @@ const MoviesListCard = () => {
 
             {loading ? (
                 <p>Loading...</p>
-            ) : searchQuery.length >= 3 && movies.length > 0 ? (
+            ) : searchQuery.length >= 1 && movies.length > 0 ? (
                 <>
                     <div className="allMovies">
                         {movies.map((movie: IFilm) => (

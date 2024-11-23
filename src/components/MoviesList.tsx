@@ -6,7 +6,7 @@ import PaginationComponent from "@/components/PaginationComponent";
 import FilmsList from "@/components/ALlFilmsList";
 import React, { useEffect } from "react";
 
-const StartPageComponent = () => {
+const MovieList = () => {
     const {
         movies,
         currentPage,
@@ -41,4 +41,4 @@ const StartPageComponent = () => {
     );
 };
 
-export default StartPageComponent;
+export default MovieList;
