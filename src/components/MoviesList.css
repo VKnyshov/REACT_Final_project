@@ -43,11 +43,12 @@
     margin: 5% 0 0 10%;
     display: flex;
     gap: 30px;
-    color: white;
+    color: lightyellow;
     width: 70%;
 }
 .details p {
     margin: 1% 0;
+    color: lightyellow;
 }
 /*///======================================*/
 .pagination {
@@ -74,7 +75,7 @@
 }
 /*==============================*/
 .header {
-    color: white;
+    color: lightyellow;
     padding: 2% 0 0 10%;
 }
 
@@ -85,7 +86,7 @@
 }
 
 .header li {
-    color: white;
+    color: lightyellow;
     cursor: pointer;
     width: 100px;
     border: 1px solid aqua;
@@ -117,7 +118,6 @@
     color: #FFD700;
 }
 /*================================*/
-
 .badge {
     position: absolute;
     background-color: red;
@@ -137,4 +137,3 @@
     display: inline-block;
     width: fit-content;
 }
-/*======================================?????????????????*/
