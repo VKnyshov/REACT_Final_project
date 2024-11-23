@@ -61,7 +61,7 @@ const useMovies = (initialMovies: IMovie[] = []) => {
         setCurrentPage,
         handleSearch,
         handlePageChange,
-        loadMovies, // Добавлено
+        loadMovies,
     };
 };
 

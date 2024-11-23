@@ -34,8 +34,8 @@ const StartPageComponent = () => {
             <PaginationComponent
                 currentPage={currentPage}
                 totalPages={totalPages}
-                onPreviousPage={() => setCurrentPage(currentPage - 1)} // Смена на предыдущую страницу
-                onNextPage={() => setCurrentPage(currentPage + 1)} // Смена на следующую страницу
+                onPreviousPage={() => setCurrentPage(currentPage - 1)}
+                onNextPage={() => setCurrentPage(currentPage + 1)}
             />
         </div>
     );

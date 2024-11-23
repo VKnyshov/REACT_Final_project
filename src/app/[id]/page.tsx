@@ -95,10 +95,10 @@ const MoviesListCard = () => {
                                         <Image
                                             src={`https://image.tmdb.org/t/p/w500${movie.poster_path}`}
                                             alt={movie.title}
-                                            width={150} // Указываем ширину
-                                            height={225} // Указываем высоту (примерное соотношение 2:3)
+                                            width={150}
+                                            height={225}
                                             style={{ borderRadius: "10px" }}
-                                            priority // Добавляем priority для повышения LCP
+                                            priority
                                         />
 
                                     ) : (
@@ -138,7 +138,7 @@ const MoviesListCard = () => {
                                     width={250}
                                     height={375}
                                     style={{ borderRadius: "10px" }}
-                                    priority // Если это "above the fold" изображение
+                                    priority
                                 />
                             )}
                         </div>
