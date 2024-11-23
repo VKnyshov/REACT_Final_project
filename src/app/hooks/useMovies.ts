@@ -7,6 +7,7 @@ const useMovies = (initialMovies: IMovie[] = []) => {
     const [currentPage, setCurrentPage] = useState(1);
     const [totalPages, setTotalPages] = useState(1);
     const [loading, setLoading] = useState(false);
+    const [searchQuery, setSearchQuery] = useState<string>("");
 
     const loadMovies = useCallback(async (page: number, genreId?: number) => {
         // setLoading(true);
@@ -20,19 +21,37 @@ const useMovies = (initialMovies: IMovie[] = []) => {
 
     const handleSearch = useCallback(async (query: string, page: number = 1, genreId?: number) => {
         // setLoading(true);
-
-        // Сбрасываем текущую страницу на первую
-        setCurrentPage(1);
+        setSearchQuery(query);
 
         if (query.trim().length >= 3) {
-            const data = await searchMovies(query, 1); // Поиск всегда с первой страницы
+            const data = await searchMovies(query, page);
             setMovies(data.results);
             setTotalPages(data.totalPages);
         } else {
             await loadMovies(page, genreId);
         }
+
+        setCurrentPage(page);
         setLoading(false);
     }, [loadMovies]);
+
+    const handlePageChange = useCallback(
+        async (page: number, genreId?: number) => {
+            setLoading(true);
+
+            if (searchQuery.trim().length >= 3) {
+                const data = await searchMovies(searchQuery, page);
+                setMovies(data.results);
+                setTotalPages(data.totalPages);
+            } else {
+                await loadMovies(page, genreId);
+            }
+
+            setCurrentPage(page);
+            setLoading(false);
+        },
+        [searchQuery, loadMovies]
+    );
 
     return {
         movies,
@@ -40,8 +59,9 @@ const useMovies = (initialMovies: IMovie[] = []) => {
         totalPages,
         loading,
         setCurrentPage,
-        loadMovies,
         handleSearch,
+        handlePageChange,
+        loadMovies, // Добавлено
     };
 };
 

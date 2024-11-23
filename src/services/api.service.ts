@@ -42,7 +42,7 @@ export async function getGenres() {
         });
 
         if (!response.ok) {
-            console.error(`Помилкапри отриманні жінрів: ${response.status}`);
+            console.error(`Помилка при отриманні жінрів: ${response.status}`);
             return [];
         }
 

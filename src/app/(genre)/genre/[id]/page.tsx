@@ -11,31 +11,48 @@ import FilmsList from "@/components/ALlFilmsList";
 const GenrePage = () => {
     const params = useParams();
     const genreId = Number(params.id);
-    const { movies, currentPage, totalPages, loading, setCurrentPage, loadMovies, handleSearch } = useMovies();
+
+    const {
+        movies,
+        currentPage,
+        totalPages,
+        loading,
+        handleSearch,
+        handlePageChange,
+    } = useMovies();
+
     const [genreName, setGenreName] = useState<string>("");
 
     useEffect(() => {
-        void (async () => {
+        // Асинхронный вызов
+        const fetchGenreData = async () => {
             const genres: IGenre[] = await getGenres();
             const genre = genres.find((g) => g.id === genreId);
             setGenreName(genre ? genre.name : "Unknown Genre");
-            await loadMovies(currentPage, genreId);
-        })();
-    }, [genreId, currentPage]);
+            await handlePageChange(1, genreId);
+        };
+
+        void fetchGenreData();
+    }, [genreId, handlePageChange]);
 
     return (
         <div>
-            <div style={{display:"flex"}}>
-            <h1 style={{color:'lightyellow', width:'50%'}}>Movies by Genre: {genreName}</h1>
-            <SearchComponent onSearch={(query) => handleSearch(query, 1, genreId)} />
+            <div style={{ display: "flex" }}>
+                <h1 style={{ color: "lightyellow", width: "50%" }}>
+                    Movies by Genre: {genreName}
+                </h1>
+                <SearchComponent
+                    onSearch={(query) => handleSearch(query, 1, genreId)}
+                />
             </div>
 
-                {loading ? <p>Loading...</p> : <FilmsList movies={movies} />}
+            {loading ? <p>Loading...</p> : <FilmsList movies={movies} />}
+
             <PaginationComponent
                 currentPage={currentPage}
                 totalPages={totalPages}
-                onPreviousPage={() => setCurrentPage(currentPage - 1)}
-                onNextPage={() => setCurrentPage(currentPage + 1)}
+                onPreviousPage={() => handlePageChange(currentPage - 1, genreId)}
+                onNextPage={() => handlePageChange(currentPage + 1, genreId)}
             />
         </div>
     );
