@@ -6,7 +6,7 @@ import PaginationComponent from "@/components/PaginationComponent";
 import useMovies from "@/app/hooks/useMovies";
 import { getGenres } from "@/services/api.service";
 import { IGenre } from "@/models/types";
-import FilmsList from "@/components/ALlFilmsList";
+import MoviesList from "@/components/AllFilmsList";
 
 const GenrePage = () => {
     const params = useParams();
@@ -46,7 +46,7 @@ const GenrePage = () => {
                 />
             </div>
 
-            {loading ? <p>Loading...</p> : <FilmsList movies={movies} />}
+            {loading ? <p>Loading...</p> : <MoviesList movies={movies} />}
 
             <PaginationComponent
                 currentPage={currentPage}

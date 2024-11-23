@@ -3,7 +3,7 @@
 import useMovies from "@/app/hooks/useMovies";
 import SearchComponent from "@/components/SearchComponent";
 import PaginationComponent from "@/components/PaginationComponent";
-import FilmsList from "@/components/ALlFilmsList";
+import MoviesList from "@/components/AllFilmsList";
 import React, { useEffect } from "react";
 
 const MovieList = () => {
@@ -29,7 +29,7 @@ const MovieList = () => {
         <div>
             <SearchComponent onSearch={(query) => handleSearch(query, 1)} />
 
-            {loading ? <p>Loading...</p> : <FilmsList movies={movies} />}
+            {loading ? <p>Loading...</p> : <MoviesList movies={movies} />}
 
             <PaginationComponent
                 currentPage={currentPage}
